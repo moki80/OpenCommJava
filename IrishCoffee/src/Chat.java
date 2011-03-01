@@ -16,9 +16,10 @@ public class Chat extends Tab1 {
 
 	public void dothis() {
 		ControlP5 controlP5 = new ControlP5(parent);
+		controlP5.setMoveable(false);
 		myTextfield = controlP5.addTextfield("Type here", x,
 				((MainWindow) parent).setuph - h / 5 - 15, w, h / 5);
-		myTextfield.setFocus(true);
+		myTextfield.keepFocus(true);
 		myTextarea = controlP5.addTextarea("chat here", "I'm here!", x, y
 				+ tabh, w, h - h / 5);
 		controlP5.addButton("submit", 0, ((MainWindow) parent).setupw - 30,

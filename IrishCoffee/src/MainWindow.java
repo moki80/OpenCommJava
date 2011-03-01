@@ -111,7 +111,7 @@ public class MainWindow extends PApplet {
 	 * Create a private space using the people contained in the list people
 	 * @param people
 	 */
-	public void createPrivateSpace(LinkedList<Person> people) {
+	public void createPrivateSpace(ArrayList<Person> people) {
 		System.out.println("Creating Private Space with....");
 		//TODO: The real work of creating private space goes here.....
 		for (Person p : people){

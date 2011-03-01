@@ -30,7 +30,7 @@ public class Person {
 		this.name = name;
 		this.space = s;
 		this.parent = parent;
-		parent.registerDraw(this);
+//		parent.registerDraw(this);
 		parent.registerMouseEvent(this);
 	}
 

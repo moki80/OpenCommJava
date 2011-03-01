@@ -15,10 +15,11 @@ public class Space extends Controller {
 	public int h, w, x, y;
 	PApplet parent;
 	public int color, trans;
-	
-	private LinkedList<Person> privateSpace;
-	private boolean creatingPrivateSpace = false;
 	public ConfirmBox confirmingPrivateSpace = null;
+	
+	private LinkedList<Person> privateSpaceCreationList;
+	private boolean creatingPrivateSpace = false;
+	
 	
 	public boolean isShown;
 
@@ -66,7 +67,15 @@ public class Space extends Controller {
 						parent.pmouseX, parent.pmouseY);
 				selectionLine.endDraw();
 			}
-			parent.image(selectionLine, w / 2, h / 2);
+			parent.image(selectionLine, 0, 0);
+		}
+		
+		for (Person p : this.people){
+			p.draw();
+		}
+		
+		if (confirmingPrivateSpace != null){
+			confirmingPrivateSpace.draw();
 		}
 	}
 	
@@ -75,7 +84,7 @@ public class Space extends Controller {
 	 * set to "creating private space" mode
 	 */
 	public void beginPrivateSpaceSelection() {
-		privateSpace = new LinkedList<Person>();
+		privateSpaceCreationList = new LinkedList<Person>();
 		selectionLine = parent.createGraphics(w, h, PApplet.P2D);
 		creatingPrivateSpace = true;
 	}
@@ -95,8 +104,8 @@ public class Space extends Controller {
 	 * @param person
 	 */
 	public void addToPrivateSpace(Person person) {
-		if (!privateSpace.contains(person)) {
-			privateSpace.add(person);
+		if (!privateSpaceCreationList.contains(person)) {
+			privateSpaceCreationList.add(person);
 		}
 	}
 
@@ -115,7 +124,7 @@ public class Space extends Controller {
 	 * @param person
 	 */
 	public void removeFromPrivateSpace(Person person) {
-		privateSpace.remove(person);
+		privateSpaceCreationList.remove(person);
 	}
 
 	/**
@@ -124,12 +133,15 @@ public class Space extends Controller {
 	 */
 	public void createNewConfirmBox() {
 		if (this.confirmingPrivateSpace == null) {
-			confirmingPrivateSpace = new ConfirmBox(this, this.w / 2 - 45,
-					this.h - 20);
-			// confirmingPrivateSpace = new
-			// ConfirmBox(this,parent.mouseX,parent.mouseY);
+			if (this.privateSpaceCreationList.size() >= 1){
+				confirmingPrivateSpace = new ConfirmBox(this, this.w / 2 - 45, 10);
+				confirmingPrivateSpace.show();
+			}
+			else{
+				cancelPrivateSpace();
+			}
 		}
-		confirmingPrivateSpace.show();
+		
 	}
 
 	/**
@@ -140,7 +152,7 @@ public class Space extends Controller {
 			confirmingPrivateSpace = null;
 		}
 		if (parent instanceof MainWindow)
-			((MainWindow) (this.parent)).createPrivateSpace(privateSpace);
+			((MainWindow) (this.parent)).createPrivateSpace(new ArrayList<Person>(privateSpaceCreationList));
 		clearPrivateSpaceSelections();
 		creatingPrivateSpace = false;
 	}
