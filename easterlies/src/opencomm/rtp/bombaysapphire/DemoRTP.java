@@ -3,32 +3,17 @@ package opencomm.rtp.bombaysapphire;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Arrays;
 
-import javax.sound.sampled.LineUnavailableException;
 
 public class DemoRTP {
-	/** int ptCnt = 0; // number of ports open
-	
-	// create users with specified IP addresses
-	UserRTP risa = new UserRTP("risa", "128.84.98.247");
-	UserRTP dellA = new UserRTP("dellA", "128.84.98.126");
-	UserRTP dellB = new UserRTP("dellB", "128.84.98.34");
-	UserRTP dellC = new UserRTP("dellC", "128.84.98.238");
-	
-	// all users in an array
-	UserRTP[] allUsers = {risa, dellA, dellB, dellC}; */
-	
 	/** main method 
 	 * @throws IOException */
 	public static void main(String[] args) {
-		int ptCnt = 0; // number of ports open
-
 		// create users with specified IP addresses
-		// UserRTP risa = new UserRTP("risa", "128.84.98.247");
-		UserRTP dellA = new UserRTP("dellA", "128.84.98.126");
-		UserRTP dellB = new UserRTP("dellB", "128.84.98.34");
-		UserRTP dellC = new UserRTP("dellC", "128.84.98.238");
+		// user name included for output purpose
+		UserRTP dellA = new UserRTP("dellA", "128.84.63.240"); // nora
+		UserRTP dellB = new UserRTP("dellB", "128.84.61.253"); // risa
+		UserRTP dellC = new UserRTP("dellC", "128.84.63.198"); // makoto
 		
 		// put all users in an array
 		UserRTP[] allUsers = {dellA, dellB, dellC};
@@ -42,7 +27,7 @@ public class DemoRTP {
 		AudioConnect CB = new AudioConnect(dellC, dellB, 5015);
 		
 		// put all pair in an array
-		AudioConnect[] allPairs = {AB, AC, BA, BC, CA, CB};
+		AudioConnect[] allPairs = {/** AB, AC, BA, */ BC, /** CA,*/ CB};
 		
 		String myIP = ""; // ip address of this computer
 		UserRTP me = dellA;
@@ -79,13 +64,6 @@ public class DemoRTP {
 						+ " to " + allPairs[i].getReceiver().getUsername());
 			}
 		}
-		
-		/** try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} */
 		
 		// for each pair, make a receiver
 			for (int i = 0; i < allPairs.length; i++) {
