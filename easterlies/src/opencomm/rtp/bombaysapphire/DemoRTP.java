@@ -27,7 +27,7 @@ public class DemoRTP {
 		AudioConnect CB = new AudioConnect(dellC, dellB, 5015);
 		
 		// put all pair in an array
-		AudioConnect[] allPairs = {/** AB, AC, BA, */ BC, /** CA,*/ CB};
+		AudioConnect[] allPairs = {AB, AC, BA, BC, CA, CB};
 		
 		String myIP = ""; // ip address of this computer
 		UserRTP me = dellA;
