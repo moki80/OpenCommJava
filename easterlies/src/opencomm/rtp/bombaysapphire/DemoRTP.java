@@ -11,23 +11,23 @@ public class DemoRTP {
 	public static void main(String[] args) {
 		// create users with specified IP addresses
 		// user name included for output purpose
-		UserRTP dellA = new UserRTP("dellA", "128.84.63.240"); // nora
-		UserRTP dellB = new UserRTP("dellB", "128.84.61.253"); // risa
-		UserRTP dellC = new UserRTP("dellC", "128.84.63.198"); // makoto
+		UserRTP dellA = new UserRTP("makoto", "192.168.1.119"); // makoto
+		UserRTP dellB = new UserRTP("risa", "192.168.1.108"); // risa
+		UserRTP dellC = new UserRTP("dellC", "128.84.63.198");
 		
 		// put all users in an array
 		UserRTP[] allUsers = {dellA, dellB, dellC};
 		
 		// put each pair and the ports to be used between them
 		AudioConnect AB = new AudioConnect(dellA, dellB, 5010);
-		AudioConnect AC = new AudioConnect(dellA, dellC, 5011);
+		// AudioConnect AC = new AudioConnect(dellA, dellC, 5011);
 		AudioConnect BA = new AudioConnect(dellB, dellA, 5012);
-		AudioConnect BC = new AudioConnect(dellB, dellC, 5013);
-		AudioConnect CA = new AudioConnect(dellC, dellA, 5014);
-		AudioConnect CB = new AudioConnect(dellC, dellB, 5015);
+		// AudioConnect BC = new AudioConnect(dellB, dellC, 5013);
+		// AudioConnect CA = new AudioConnect(dellC, dellA, 5014);
+		// AudioConnect CB = new AudioConnect(dellC, dellB, 5015);
 		
 		// put all pair in an array
-		AudioConnect[] allPairs = {AB, AC, BA, BC, CA, CB};
+		AudioConnect[] allPairs = {AB, /** AC, */ BA, /** BC, CA, CB */};
 		
 		String myIP = ""; // ip address of this computer
 		UserRTP me = dellA;
