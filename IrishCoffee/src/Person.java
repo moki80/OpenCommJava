@@ -1,7 +1,6 @@
 import java.awt.event.MouseEvent;
 import processing.core.PApplet;
 import processing.core.PConstants;
-import processing.core.PGraphics;
 import processing.core.PImage;
 
 public class Person {
@@ -33,10 +32,21 @@ public class Person {
 //		parent.registerDraw(this);
 		parent.registerMouseEvent(this);
 	}
+	
+	// NORA: added this method
+	public void setSpace(Space space) {
+		this.space = space;
+	}
+	
+	public PImage getImage(){
+		return image;
+	}
+	
+	public String getName(){
+		return name;
+	}
 
 	public void draw() {
-		if (!space.isShown)
-			return;
 		
 		parent.rectMode(PConstants.CENTER);
 		
@@ -67,8 +77,6 @@ public class Person {
 	}
 
 	public void mouseEvent(MouseEvent event) {
-		if (!space.isShown)
-			return;
 		
 		if ((space.selected == null && isMouseover(parent.mouseX,
 				parent.mouseY)) || space.selected == this) {
@@ -135,5 +143,20 @@ public class Person {
 	 */
 	public String toString(){
 		return this.name + " (" + x + "," + y + ")";
+	}
+	
+	@Override
+	/**
+	 * Person A = Person B if A.name = B.name
+	 */
+	public boolean equals(Object o){
+		boolean equals = false;
+		if (o instanceof Person){
+			Person p = (Person)o;
+			if (p.name.compareTo(this.name) == 0){
+				equals = true;
+			}
+		}
+		return equals;
 	}
 }

@@ -1,17 +1,12 @@
 
-import java.awt.event.MouseEvent;
-
+import processing.core.PApplet;
 import controlP5.Button;
 import controlP5.CColor;
 import controlP5.ControlEvent;
 import controlP5.ControlFont;
 import controlP5.ControlListener;
 import controlP5.ControlP5;
-import controlP5.ControlWindow;
-import controlP5.Label;
 import controlP5.Textlabel;
-
-import processing.core.*;
 
 /**
  * Create a simple 2 button popup to confirm private space creation

@@ -1,12 +1,8 @@
-import java.awt.event.MouseEvent;
-
+import processing.core.PApplet;
 import controlP5.ControlP5;
 import controlP5.ControlP5XMLElement;
 import controlP5.Controller;
 import controlP5.Tab;
-import java.util.ArrayList;
-
-import processing.core.*;
 
 public class Tab1 extends Controller {
 	// Needs to keep track of tabs
@@ -15,7 +11,8 @@ public class Tab1 extends Controller {
 	// Need to draw tab
 	// parent PApplet
 	
-	public int w, h, x, y;
+	public static int w, h;
+	public int x, y;
 	public int tabh=25;
 	public PApplet parent;
 	public static int counter=0;
