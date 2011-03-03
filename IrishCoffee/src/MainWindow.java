@@ -1,26 +1,26 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
-
-import controlP5.ControlP5;
 
 import processing.core.PApplet;
 import processing.core.PFont;
+import controlP5.ControlEvent;
+import controlP5.ControlP5;
+import controlP5.Textfield;
 
 public class MainWindow extends PApplet {
 
 	public static PFont font;
-	public static int[] colors = { 0xFF00CCFF, 0xFF00CC99, 0xFF00CC33,
-			0xFF0066FF, 0xFF00D699 };
+	public static int[] colors = { 0xFF00CCFF, 0xFF00CC99, 0xFF00CC33, 0xFF0066FF, 0xFF00D699 };
 	public static int mainh = 245;
 	public static int mainw = 480;
-	//ArrayList<Person> people = new ArrayList<Person>();
 	
 	public static int setupw= 480;
 	public static int setuph= 400;
 	
 	//HanWei
-	Tab1 pspace1, pspace2;
+	PrivateSpace pspace1, pspace2;
 	ControlP5 controlP5;
+	Tab1 chat;
+	public static ArrayList<Person> people= new ArrayList<Person>();
 
 	private Space mainSpace;
 	
@@ -30,17 +30,36 @@ public class MainWindow extends PApplet {
 		
 		controlP5 = new ControlP5(this);
 		
-		//NORAS INIT
-		ArrayList<Peep> people1= new ArrayList<Peep>();
-		people1.add(new Peep(this, this.loadImage("naj.png")));
-		people1.add(new Peep(this, this.loadImage("nora.png")));
-		ArrayList<Peep> people2= new ArrayList<Peep>();
-		people2.add(new Peep(this, this.loadImage("risa.png")));
-		people2.add(new Peep(this, this.loadImage("mak.png")));
-		people2.add(new Peep(this, this.loadImage("nora.png")));
+
+		// NORA: initialize all people for static reference
+		PApplet p= (PApplet)this;
+		people.add(new Person(67, 108, p, 1, p.loadImage("naj.png"),
+				"Najla E.", null));
+		people.add(new Person(133, 54, p, 2, p.loadImage("nora.png"),
+				"Nora N.", null));
+		people.add(new Person(200, 210, p, 3,
+				p.loadImage("risa.png"), "Risa N.", null));
+		people.add(new Person(267, 162, p, 4, p.loadImage("mak.png"),
+				"Makoto B.", null)); 
+		
+		
+		//NORAS INIT: changed these methods to refer to static Person's already created
+		// in class Space
+		ArrayList<Person> people1= new ArrayList<Person>();
+		people1.add(people.get(0));
+		people1.add(people.get(1));
+		ArrayList<Person> people2= new ArrayList<Person>();
+		people2.add(people.get(3));
+		people2.add(people.get(2));
+		people2.add(people.get(1));
+		
 		pspace1= new PrivateSpace(this, people1, 0, controlP5);
 		pspace2= new PrivateSpace(this, people2, setupw/4, controlP5);
-		Tab1 chat= new Chat(this, setupw/2, controlP5); 
+		/*Tab1*/ chat= new Chat(this, setupw/2, controlP5); 
+		
+		
+//		Han-Wei: Feb 26: Correct this
+		chat= new Chat(this, setupw/2, controlP5); 
 		
 		//HAN WEI
 		//controlP5 = new ControlP5(this);
@@ -54,19 +73,7 @@ public class MainWindow extends PApplet {
 		controlP5.register(pspace2);	
 		controlP5.register(chat);
 		
-		
-		/*people.add(new Person(67, 108, this, 1, loadImage("naj.png"),
-				"Najla E.", null));
-		people.add(new Person(133, 54, this, 2, loadImage("nora.png"),
-				"Nora N.", null));
-		people.add(new Person(200, 210, this, 3,
-				loadImage("risa.png"), "Risa N.", null));
-		people.add(new Person(267, 162, this, 4, loadImage("mak.png"),
-				"Makoto B.", null));*/
-		
-
-		
-		mainSpace = new Space(this, mainh, mainw, 0xFF006699, 255, 0, 0, controlP5, true);
+		mainSpace = new Space(this, mainh, mainw, 0xFF006699, 255, 0, 0, controlP5/*Han-Wei: Feb 26 Discard this: true, */);
 		controlP5.register(mainSpace);
 		smooth();
 	}
@@ -106,15 +113,27 @@ public class MainWindow extends PApplet {
 			}
 		}
 	}
+	
+	// NORA - added this, important for chat
+	/**
+	 * NEED COMMENT
+	 */
+	public void controlEvent(ControlEvent theEvent){
+		if(theEvent.controller() instanceof Textfield) {
+			Textfield myTextfield= (Textfield)theEvent.controller(); 
+		     Chat.content += "\n" + myTextfield.getText();
+		     Chat.myTextarea.setText(Chat.content); 
+		   } 
+	}
 
 	/**
 	 * Create a private space using the people contained in the list people
 	 * @param people
 	 */
-	public void createPrivateSpace(LinkedList<Person> people) {
+	public static void createPrivateSpace(ArrayList<Person> privPeople) {
 		System.out.println("Creating Private Space with....");
 		//TODO: The real work of creating private space goes here.....
-		for (Person p : people){
+		for (Person p : privPeople){
 			System.out.print(p + " | ");
 		}
 		System.out.println();
