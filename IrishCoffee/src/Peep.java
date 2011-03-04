@@ -10,6 +10,7 @@ public class Peep {
 	int w = 23, h = 23;
 	PImage icon;
 	String name;
+	private boolean hidden;
 
 	public Peep(PApplet parent, PImage image, String name, int x, int y) {
 		this.parent = parent;
@@ -28,6 +29,7 @@ public class Peep {
 	}
 
 	public void draw() {
+		if (hidden) return;
 		parent.rectMode(PConstants.CENTER);
 		parent.strokeWeight(1);
 		parent.stroke(MainWindow.colors[0]);
@@ -42,4 +44,7 @@ public class Peep {
 		parent.text(name, x + Tab1.w / 5, y + h/4);
 	}
 
+	public void hide() {
+		hidden = true;
+	}
 }

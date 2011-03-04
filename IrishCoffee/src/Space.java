@@ -36,10 +36,10 @@ public class Space extends Controller {
 		this.color = color;
 		this.trans = trans;
 		//parent.registerDraw(this);
-		spacePeople.add(new Person(67, 108, parent, 1, parent.loadImage("naj.png"),"Najla E.", this));
-		spacePeople.add(new Person(133, 54, parent, 2, parent.loadImage("nora.png"),"Nora N.", this));
-		spacePeople.add(new Person(200, 210, parent, 3,parent.loadImage("risa.png"), "Risa N.", this));
-		spacePeople.add(new Person(267, 162, parent, 4, parent.loadImage("mak.png"),"Makoto B.", this));
+		spacePeople.add(new Person(67, 108, parent, 1, "naj.png","Najla E.", this));
+		spacePeople.add(new Person(133, 54, parent, 2, "nora.png","Nora N.", this));
+		spacePeople.add(new Person(200, 210, parent, 3,"risa.png", "Risa N.", this));
+		spacePeople.add(new Person(267, 162, parent, 4,"mak.png","Makoto B.", this)); 
 		
 		for (Person p : MainWindow.people){//For each person p in MainWindow.people			
 			p.setSpace(this);
@@ -153,7 +153,7 @@ public class Space extends Controller {
 			confirmingPrivateSpace = null;
 		}
 		if (parent instanceof MainWindow)
-			MainWindow.createPrivateSpace(new ArrayList<Person>(privateSpaceCreationList));
+			((MainWindow)parent).createPrivateSpace(new ArrayList<Person>(privateSpaceCreationList));
 		clearPrivateSpaceSelections();
 		creatingPrivateSpace = false;
 	}

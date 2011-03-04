@@ -155,6 +155,19 @@ public class PrivateSpace extends Tab1 {
 			locked = false;
 			break;
 		}		
+	}
+
+	public void clear() {
+		for (Peep p : peeps){
+			p.hide();
+		}
+		this.peeps = new ArrayList<Peep>();
+		this.people = new ArrayList<Person>();
+	}
+
+	public void addPerson(Person p) {
+		if (!this.people.contains(p))
+			this.people.add(p);
 	}	
 	
 }

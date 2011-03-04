@@ -14,22 +14,26 @@ public class Person {
 	String name;
 	Space space;
 	boolean selectedForPrivateSpace = false;
+	private String picFileName = "";
+	private String imageName;
 
-	public Person(float x, float y, PApplet parent, int index, PImage image, String name, Space s) {
+	public Person(float x, float y, PApplet parent, int index, String imageName, String name, Space s) {
+		
+		this.index = index;
+		
+		this.imageName = imageName;
+		image = parent.loadImage(imageName);
 		this.x = x;
 		this.y = y;
+		 
 		this.w = image.width;
 		this.h = image.height;
 		this.halfW = (float) (w / 2.0);
 		this.halfH = (float) (h / 2.0);
-		this.index = index;
-		
-		this.image = image;
 		
 		this.name = name;
 		this.space = s;
 		this.parent = parent;
-//		parent.registerDraw(this);
 		parent.registerMouseEvent(this);
 	}
 	
@@ -39,7 +43,7 @@ public class Person {
 	}
 	
 	public PImage getImage(){
-		return image;
+		return parent.loadImage(imageName);
 	}
 	
 	public String getName(){

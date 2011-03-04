@@ -32,15 +32,11 @@ public class MainWindow extends PApplet {
 		
 
 		// NORA: initialize all people for static reference
-		PApplet p= (PApplet)this;
-		people.add(new Person(67, 108, p, 1, p.loadImage("naj.png"),
-				"Najla E.", null));
-		people.add(new Person(133, 54, p, 2, p.loadImage("nora.png"),
-				"Nora N.", null));
-		people.add(new Person(200, 210, p, 3,
-				p.loadImage("risa.png"), "Risa N.", null));
-		people.add(new Person(267, 162, p, 4, p.loadImage("mak.png"),
-				"Makoto B.", null)); 
+		PApplet p = (PApplet)this;
+		people.add(new Person(67, 108, p, 1, "naj.png","Najla E.", null));
+		people.add(new Person(133, 54, p, 2, "nora.png","Nora N.", null));
+		people.add(new Person(200, 210, p, 3,"risa.png", "Risa N.", null));
+		people.add(new Person(267, 162, p, 4,"mak.png","Makoto B.", null)); 
 		
 		
 		//NORAS INIT: changed these methods to refer to static Person's already created
@@ -130,12 +126,15 @@ public class MainWindow extends PApplet {
 	 * Create a private space using the people contained in the list people
 	 * @param people
 	 */
-	public static void createPrivateSpace(ArrayList<Person> privPeople) {
+	public void createPrivateSpace(ArrayList<Person> privPeople) {
+		pspace1.clear();
 		System.out.println("Creating Private Space with....");
 		//TODO: The real work of creating private space goes here.....
 		for (Person p : privPeople){
 			System.out.print(p + " | ");
+			pspace1.addPerson(p);
 		}
+		pspace1.createPeeps();
 		System.out.println();
 	}
 }
