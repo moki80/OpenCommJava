@@ -1,6 +1,7 @@
 import java.awt.event.MouseEvent;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import controlP5.*;
 
 public class Chat extends Tab1 {
@@ -43,11 +44,10 @@ public class Chat extends Tab1 {
 		myTextfield = controlP5.addTextfield("Type here", x, ((MainWindow) parent).setuph - h / 5 - 15, w, h / 5);
 		myTextfield.setFocus(true);
 		
-		controlP5.addButton("submit", 0, ((MainWindow) parent).setupw - 30,	((MainWindow) parent).setuph - h / 5 - 14, 30, h / 5 - 1);
-		
 	}
 
 	public void draw(PApplet parent) {
+		parent.rectMode(PConstants.ARROW);
 		if (number == 0)
 			parent.fill(0xFFFF9900);
 		else if (number == 1)

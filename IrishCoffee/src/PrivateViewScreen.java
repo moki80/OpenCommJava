@@ -10,13 +10,14 @@ public class PrivateViewScreen extends Controller {
 	Space privateSpaceWin;
 	private boolean isOpen;		// isOpen toggles when users click outside of the private space window
 	
-	PrivateViewScreen(PApplet theParent, ControlP5 theControlP5, String theName, int theX, int theY, int theWidth, int theHeight) {
+	PrivateViewScreen(PApplet theParent, ControlP5 theControlP5, String theName, int theX, int theY, int theWidth, int theHeight, Space s) {
 		super(theControlP5, (Tab)(theControlP5.getTab("default")), theName, theX, theY, theWidth, theHeight);
 		parent = theParent;
 		controlP5 = new ControlP5(parent);
-		privateSpaceWin = new Space(parent, 200, 200, 0, 50, 2 * (theX - (theParent.width) / 2), -2 * theY, controlP5);
+		privateSpaceWin = s;//new Space(parent, 200, 200, 0, 50, 2 * (theX - (theParent.width) / 2), -2 * theY, controlP5);
 		controlP5.register(privateSpaceWin);
 		parent.registerMouseEvent(this);
+		isOpen = false;
 	}
 	
 	public void draw(PApplet parent) {

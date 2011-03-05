@@ -9,9 +9,7 @@ import controlP5.Controller;
 import controlP5.Tab;
 
 public class Space extends Controller {
-	// NORA: might not need this for now since I created an ArrayList like this
-	// in class MainWindow
-	ArrayList<Person> spacePeople = new ArrayList<Person>();
+	ArrayList<PersonVisualRep> spacePeople = new ArrayList<PersonVisualRep>();
 	public Person selected;
 	public int h, w, x, y;
 	PApplet parent;
@@ -20,13 +18,11 @@ public class Space extends Controller {
 	private LinkedList<Person> privateSpaceCreationList;
 	private boolean creatingPrivateSpace = false;
 	public ConfirmBox confirmingPrivateSpace = null;
-	
-
-	
 	PGraphics selectionLine;
+	boolean visable = true;
 
-	public Space(PApplet parent, int h, int w, int color, int trans, int x, int y, ControlP5 theControlP5 /*Han-Wei: Feb 26 Discard this: boolean show, */) {
-		super(theControlP5, (Tab) (theControlP5.getTab("default")), "name",	x, y, w, h);
+	public Space(PApplet parent, int h, int w, int color, int trans, int x, int y, ControlP5 theControlP5) {
+		super(theControlP5, (Tab) (theControlP5.getTab("default")), "name"+System.currentTimeMillis(),	x, y, w, h);
 		
 		this.parent = parent;
 		this.h = h;
@@ -35,49 +31,40 @@ public class Space extends Controller {
 		this.y = y;
 		this.color = color;
 		this.trans = trans;
-		//parent.registerDraw(this);
-		spacePeople.add(new Person(67, 108, parent, 1, "naj.png","Najla E.", this));
-		spacePeople.add(new Person(133, 54, parent, 2, "nora.png","Nora N.", this));
-		spacePeople.add(new Person(200, 210, parent, 3,"risa.png", "Risa N.", this));
-		spacePeople.add(new Person(267, 162, parent, 4,"mak.png","Makoto B.", this)); 
-		
-		for (Person p : MainWindow.people){//For each person p in MainWindow.people			
-			p.setSpace(this);
-		}
-//		for (int i = 0; i < MainWindow.people.size(); i++) {
-//			MainWindow.people.get(i).setSpace(this);
-//		}
 	}
 
 	public void draw(PApplet parent) {
 		
-		parent.pushMatrix();
-		parent.translate(position().x(), position().y());		
+		if (this.visable){
 		
-		parent.rectMode(PConstants.LEFT);
-		parent.fill(color, trans);
-		parent.rect(0, 0, w, h);
-		
-		if (this.isCreatingPrivateSpace()) {
-			// draw lasso if selecting people for private space
-			if (parent.mousePressed) {
-				selectionLine.stroke(255);
-				selectionLine.strokeWeight(6);
-				selectionLine.beginDraw();
-				selectionLine.line(parent.mouseX, parent.mouseY, parent.pmouseX, parent.pmouseY);
-				selectionLine.endDraw();
+			parent.pushMatrix();
+			parent.translate(position().x(), position().y());
+			parent.rectMode(PConstants.LEFT);
+			parent.imageMode(PConstants.CENTER);
+			parent.fill(color, trans);
+			parent.rect(x, y, w, h);
+			
+			if (this.isCreatingPrivateSpace()) {
+				// draw lasso if selecting people for private space
+				if (parent.mousePressed) {
+					selectionLine.stroke(255);
+					selectionLine.strokeWeight(6);
+					selectionLine.beginDraw();
+					selectionLine.line(parent.mouseX, parent.mouseY, parent.pmouseX, parent.pmouseY);
+					selectionLine.endDraw();
+				}
+				parent.image(selectionLine, this.w/2, h/2);
 			}
-			parent.image(selectionLine, 0, 0);
+			
+			for (PersonVisualRep p : this.spacePeople){
+				p.draw();
+			}
+			
+			if (confirmingPrivateSpace != null){
+				confirmingPrivateSpace.draw();
+			}
+			parent.popMatrix();
 		}
-		
-		for (Person p : this.spacePeople){
-			p.draw();
-		}
-		
-		if (confirmingPrivateSpace != null){
-			confirmingPrivateSpace.draw();
-		}
-		parent.popMatrix();
 	}
 	
 	/**
@@ -104,9 +91,9 @@ public class Space extends Controller {
 	 * 
 	 * @param person
 	 */
-	public void addToPrivateSpace(Person person) {
-		if (!privateSpaceCreationList.contains(person)) {
-			privateSpaceCreationList.add(person);
+	public void addToPrivateSpace(PersonVisualRep person) {
+		if (!privateSpaceCreationList.contains(person.who)) {
+			privateSpaceCreationList.add(person.who);
 		}
 	}
 
@@ -114,7 +101,7 @@ public class Space extends Controller {
 	 * Remove all from list of people pending to be placed in private space
 	 */
 	public void clearPrivateSpaceSelections() {
-		for (Person p : spacePeople) {
+		for (PersonVisualRep p : spacePeople) {
 			p.selectedForPrivateSpace = false;
 		}
 	}
@@ -124,7 +111,7 @@ public class Space extends Controller {
 	 * 
 	 * @param person
 	 */
-	public void removeFromPrivateSpace(Person person) {
+	public void removeFromPrivateSpace(PersonVisualRep person) {
 		privateSpaceCreationList.remove(person);
 	}
 
@@ -135,7 +122,7 @@ public class Space extends Controller {
 	public void createNewConfirmBox() {
 		if (this.confirmingPrivateSpace == null) {
 			if (this.privateSpaceCreationList.size() >= 1){
-				confirmingPrivateSpace = new ConfirmBox(this, this.w / 2 - 45, 10);
+				confirmingPrivateSpace = new ConfirmBox(this, this.w / 2 - 45, this.h/2 - 25);
 				confirmingPrivateSpace.show();
 			}
 			else{
@@ -179,6 +166,27 @@ public class Space extends Controller {
 	public void setValue(float arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void setPeople(ArrayList<Person> people) {
+		this.spacePeople = new ArrayList<PersonVisualRep>(); //clear images
+		for (Person p : people){
+			PersonVisualRep vr = new PersonVisualRep(p, p.x, p.y, this);
+			vr.checkOutOfBounds();
+			this.spacePeople.add(vr);
+		}
+	}
+
+	public void setPeopleVisible(boolean b) {
+		for (PersonVisualRep v : this.spacePeople){
+			v.setVisable(b);
+		}
+	}
+
+	public void setVisable(boolean b) {
+		this.visable = b;
+		if (b == false)
+			this.selected = null;
 	}
 	
 	

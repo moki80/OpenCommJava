@@ -2,6 +2,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import controlP5.ControlP5;
 
 public class PrivateSpace extends Tab1 {
@@ -23,14 +24,18 @@ public class PrivateSpace extends Tab1 {
 		this.parent = theParent;
 		this.c = new ControlP5(this.parent);
 
-		privateRoom = new Space(parent, 200, 200, 255, 255,2 * (x - (parent.width) / 2), -2 * y, c);
-		c.register(privateRoom);
+		privateRoom = new Space(parent, MainWindow.mainh - 100, MainWindow.mainw - 150, 0, 50, -80, -80, controlP5);
+//		privateRoom = new Space(parent, 200, 200, 0, 50, 2 * (x - (theParent.width) / 2), -2 * y, controlP5);//new Space(parent, 200, 200, 255, 255,2 * (x - (parent.width) / 2), -2 * y, c);
+		privateRoom.setPeople(people);
+		privateRoom.setPeopleVisible(false);
+		
 
 		// parent.registerDraw(this);
 //		dothis();
 		
-		privateViewScreen = new PrivateViewScreen(parent, c, "PrivateViewScreen", 0, 0, MainWindow.setupw, MainWindow.setuph);
-		this.c.register(privateViewScreen);
+		privateViewScreen = new PrivateViewScreen(parent, c, "PrivateViewScreen", 0, 0, MainWindow.setupw, MainWindow.setuph,privateRoom);
+	//	this.c.register(privateViewScreen);
+	//	c.register(privateRoom);
 		
 		peeps = new ArrayList<Peep>();
 		createPeeps(); // changed by NORA
@@ -77,6 +82,8 @@ public class PrivateSpace extends Tab1 {
 	 * 
 	 */
 	public void draw(PApplet parent) {
+		
+		parent.rectMode(PConstants.LEFT);
 		// Choose color of tab, and draw tab title
 		if (number == 0)
 			parent.fill(0xFFFF9900);
@@ -85,7 +92,7 @@ public class PrivateSpace extends Tab1 {
 		else
 			parent.fill(0xFF00FF00);
 		parent.stroke(MainWindow.colors[1]);
-		parent.rect(x, y, w, tabh);
+//		parent.rect(x, y, w, tabh);
 
 //		Han-Wei: Feb 26: Add this line
 		parent.pushMatrix();
@@ -132,7 +139,9 @@ public class PrivateSpace extends Tab1 {
 		case MouseEvent.MOUSE_CLICKED:
 			if(getIsInside()) {
 //				isOpen = !isOpen;
-				privateViewScreen.setIsOpen(!privateViewScreen.isOpen());
+				boolean open = !privateViewScreen.isOpen();
+				privateViewScreen.setIsOpen(open);
+				privateRoom.setPeopleVisible(open);
 			}
 			break;
 		case MouseEvent.MOUSE_PRESSED:
@@ -168,6 +177,10 @@ public class PrivateSpace extends Tab1 {
 	public void addPerson(Person p) {
 		if (!this.people.contains(p))
 			this.people.add(p);
+	}
+
+	public void reroom() {
+		this.privateRoom.setPeople(this.people);
 	}	
 	
 }
