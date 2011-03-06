@@ -43,6 +43,7 @@ public class Chat extends Tab1 {
 		
 		myTextfield = controlP5.addTextfield("Type here", x, ((MainWindow) parent).setuph - h / 5 - 15, w, h / 5);
 		myTextfield.setFocus(true);
+		myTextfield.keepFocus(true);
 		
 	}
 
