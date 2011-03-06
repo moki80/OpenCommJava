@@ -122,7 +122,7 @@ public class Space extends Controller {
 	public void createNewConfirmBox() {
 		if (this.confirmingPrivateSpace == null) {
 			if (this.privateSpaceCreationList.size() >= 1){
-				confirmingPrivateSpace = new ConfirmBox(this, this.w / 2 - 45, this.h/2 - 25);
+				confirmingPrivateSpace = new ConfirmBox(this, this.w / 2 - 74, this.h/2 - 25);
 				confirmingPrivateSpace.show();
 			}
 			else{

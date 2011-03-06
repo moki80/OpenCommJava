@@ -15,14 +15,17 @@ public class PrivateViewScreen extends Controller {
 		parent = theParent;
 		controlP5 = new ControlP5(parent);
 		privateSpaceWin = s;//new Space(parent, 200, 200, 0, 50, 2 * (theX - (theParent.width) / 2), -2 * theY, controlP5);
-		controlP5.register(privateSpaceWin);
+//		this.width = MainWindow.mainw;
+//		this.height = MainWindow.mainh;
+//		controlP5.register(privateSpaceWin);
 		parent.registerMouseEvent(this);
 		isOpen = false;
 	}
 	
 	public void draw(PApplet parent) {
 		
-		parent.fill(0, 50);
+		parent.fill(45, 10);
+		parent.rectMode(PConstants.ARROW);
 		parent.rect(position().x(), position().y(), width, height);
 		
 		if (isOpen) {
@@ -37,13 +40,26 @@ public class PrivateViewScreen extends Controller {
 	}
 	
 	public void mouseEvent(MouseEvent event) {
-		if(getIsInside() && !privateSpaceWin.isInside()) {
-			switch (event.getID()) {
-				case MouseEvent.MOUSE_PRESSED:
-					isOpen = !isOpen;
-					break;
-			}		
+		if (isOpen){
+			if(!checkOutOfBounds(event.getX(),event.getY())) {
+				switch (event.getID()) {
+					case MouseEvent.MOUSE_PRESSED:
+						if (privateSpaceWin.selected == null)
+							isOpen = !isOpen;
+						break;
+				}		
+			}
 		}
+	}
+	
+	public boolean checkOutOfBounds(int x, int y) {
+		return !(x > MainWindow.mainw || y > MainWindow.mainh);
+//		int px = (int) privateSpaceWin.position().x;
+//		int py = (int) privateSpaceWin.position().y;
+//		
+//		return (x  > privateSpaceWin.position().x && x < privateSpaceWin.position().x + privateSpaceWin.w
+//				&& y > privateSpaceWin.position().y && y < privateSpaceWin.position().y + privateSpaceWin.h);
+//		
 	}
 	
 	public boolean isOpen() {

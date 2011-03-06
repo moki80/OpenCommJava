@@ -16,13 +16,14 @@ public class MainWindow extends PApplet {
 	public static int setupw= 480;
 	public static int setuph= 400;
 	
+	static Space mainSpace;
 	//HanWei
 	PrivateSpace[] pspaces = new PrivateSpace[2];
 	ControlP5 controlP5;
 	Tab1 chat;
 	public static ArrayList<Person> people= new ArrayList<Person>();
 
-	Space mainSpace;
+	
 	
 	public void setup() {
 		size(setupw, setuph);
@@ -45,12 +46,12 @@ public class MainWindow extends PApplet {
 		//NORAS INIT: changed these methods to refer to static Person's already created
 		// in class Space
 		ArrayList<Person> people1= new ArrayList<Person>();
-		people1.add(people.get(0));
-		people1.add(people.get(1));
+//		people1.add(people.get(0));
+//		people1.add(people.get(1));
 		ArrayList<Person> people2= new ArrayList<Person>();
-		people2.add(people.get(3));
-		people2.add(people.get(2));
-		people2.add(people.get(1));
+//		people2.add(people.get(3));
+//		people2.add(people.get(2));
+//		people2.add(people.get(1));
 		
 		pspaces[0]= new PrivateSpace(this, people1, 0, controlP5);
 		pspaces[1]= new PrivateSpace(this, people2, setupw/4, controlP5);
@@ -65,17 +66,16 @@ public class MainWindow extends PApplet {
 		// create a new instance of the PrivateRoomBtn controller.
 		//pspace1 = new PrivateRoomBtn(this, controlP5, "privateRoomBtn1", 0, mainh, (height-mainh)/2, (height-mainh));
 		// register the newly created PrivateRoomBtn with controlP5
+		mainSpace = new Space(this, mainh, mainw, 0xFF006699, 255, 0, 0, controlP5/*Han-Wei: Feb 26 Discard this: true, */);
+		mainSpace.setPeople(people);
+		mainSpace.setPeopleVisible(true);
+		controlP5.register(mainSpace);
 		controlP5.register(pspaces[0]);
 		// create a new instance of the PrivateRoomBtn controller.
 		//pspace2 = new PrivateRoomBtn(this, controlP5, "privateRoomBtn2", width-(height-mainh)/2, mainh, (height-mainh)/2, (height-mainh));
 		// register the newly created PrivateRoomBtn with controlP5
 		controlP5.register(pspaces[1]);	
 		controlP5.register(chat);
-		
-		mainSpace = new Space(this, mainh, mainw, 0xFF006699, 255, 0, 0, controlP5/*Han-Wei: Feb 26 Discard this: true, */);
-		mainSpace.setPeople(people);
-		mainSpace.setPeopleVisible(true);
-		controlP5.register(mainSpace);
 		smooth();
 	}
 
@@ -85,6 +85,7 @@ public class MainWindow extends PApplet {
 		boolean mainVis = true;
 		for (PrivateSpace priv : pspaces){
 			if (priv.privateViewScreen.isOpen()){
+				priv.privateRoom.draw(this);
 				mainVis = false;
 			}
 		}
@@ -92,6 +93,13 @@ public class MainWindow extends PApplet {
 		mainSpace.setVisable(mainVis);
 		// </REMOVE>
 		mainSpace.draw(this);
+//		chat.draw(this);
+//		for (PrivateSpace priv : pspaces){
+//			priv.draw(this);
+//			if (priv.privateViewScreen.isOpen()){
+//				priv.draw(this);
+//			}
+//		}
 	}
 	
 	/**

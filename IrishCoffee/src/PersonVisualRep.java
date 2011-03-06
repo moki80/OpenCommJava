@@ -108,11 +108,16 @@ public class PersonVisualRep {
 					switch (event.getID()) {
 					case MouseEvent.MOUSE_PRESSED:
 						where.selected = this.who;
+						if (!where.equals(MainWindow.mainSpace))
+						{
+							System.out.println("not in mainWindow");
+						}						
 						oldX = parent.mouseX;
 						oldY = parent.mouseY;
 						break;
 
 					case MouseEvent.MOUSE_DRAGGED:
+						where.selected = this.who;
 						float dx = parent.mouseX - oldX;
 						float dy = parent.mouseY - oldY;
 						x += dx;
@@ -132,6 +137,8 @@ public class PersonVisualRep {
 				}
 			}
 		}
+		if (event.getID() == MouseEvent.MOUSE_RELEASED)
+			where.selected = null;
 	}
 
 	public void checkOutOfBounds() {

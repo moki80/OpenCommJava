@@ -24,7 +24,7 @@ public class PrivateSpace extends Tab1 {
 		this.parent = theParent;
 		this.c = new ControlP5(this.parent);
 
-		privateRoom = new Space(parent, MainWindow.mainh - 100, MainWindow.mainw - 150, 0, 50, -80, -80, controlP5);
+		privateRoom = new Space(parent, MainWindow.mainh - 120, MainWindow.mainw - 150, 222, 50, -60, -70, controlP5);
 //		privateRoom = new Space(parent, 200, 200, 0, 50, 2 * (x - (theParent.width) / 2), -2 * y, controlP5);//new Space(parent, 200, 200, 255, 255,2 * (x - (parent.width) / 2), -2 * y, c);
 		privateRoom.setPeople(people);
 		privateRoom.setPeopleVisible(false);
@@ -137,11 +137,11 @@ public class PrivateSpace extends Tab1 {
 	public void mouseEvent(MouseEvent event) {
 		switch (event.getID()) {
 		case MouseEvent.MOUSE_CLICKED:
+			boolean open = !privateViewScreen.isOpen();
 			if(getIsInside()) {
-//				isOpen = !isOpen;
-				boolean open = !privateViewScreen.isOpen();
 				privateViewScreen.setIsOpen(open);
 				privateRoom.setPeopleVisible(open);
+//				privateRoom.setVisable(open);
 			}
 			break;
 		case MouseEvent.MOUSE_PRESSED:
