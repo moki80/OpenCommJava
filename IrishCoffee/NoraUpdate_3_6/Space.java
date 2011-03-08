@@ -48,7 +48,7 @@ public class Space extends Controller {
 				// draw lasso if selecting people for private space
 				if (parent.mousePressed) {
 					selectionLine.stroke(255);
-					selectionLine.strokeWeight(4);
+					selectionLine.strokeWeight(6);
 					selectionLine.beginDraw();
 					selectionLine.line(parent.mouseX, parent.mouseY, parent.pmouseX, parent.pmouseY);
 					selectionLine.endDraw();
@@ -122,7 +122,7 @@ public class Space extends Controller {
 	public void createNewConfirmBox() {
 		if (this.confirmingPrivateSpace == null) {
 			if (this.privateSpaceCreationList.size() >= 1){
-				confirmingPrivateSpace = new ConfirmBox(this, this.w / 2 - 74, this.h/2 - 25);
+				confirmingPrivateSpace = new ConfirmBox(this, this.w / 2 - 45, this.h/2 - 25);
 				confirmingPrivateSpace.show();
 			}
 			else{

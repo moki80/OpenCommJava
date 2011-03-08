@@ -1,6 +1,7 @@
 import java.awt.event.MouseEvent;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import controlP5.*;
 
 public class Chat extends Tab1 {
@@ -37,17 +38,17 @@ public class Chat extends Tab1 {
 	public void dothis() {
 		// Han-Wei: Feb 26: Correct this
 		controlP5 = new ControlP5(parent); // did not create a new one
-		myTextarea = controlP5.addTextarea("chat here", "I'm here!", x, y + tabh, w, h - h / 5);
+		myTextarea = controlP5.addTextarea("chat here", "I'm here!", x, y + tabh, w - 6, h - h / 5);
 		myTextarea.setColorForeground(0xffff0000);
 		
 		myTextfield = controlP5.addTextfield("Type here", x, ((MainWindow) parent).setuph - h / 5 - 15, w, h / 5);
 		myTextfield.setFocus(true);
-		
-		controlP5.addButton("submit", 0, ((MainWindow) parent).setupw - 30,	((MainWindow) parent).setuph - h / 5 - 14, 30, h / 5 - 1);
+		myTextfield.keepFocus(true);
 		
 	}
 
 	public void draw(PApplet parent) {
+		parent.rectMode(PConstants.ARROW);
 		if (number == 0)
 			parent.fill(0xFFFF9900);
 		else if (number == 1)

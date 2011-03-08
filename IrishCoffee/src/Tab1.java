@@ -23,7 +23,7 @@ public class Tab1 extends Controller {
 
 	public Tab1(PApplet parent, int x, int y, int w, int h, ControlP5 theControlP5) {
 		super(theControlP5, (Tab) (theControlP5.getTab("default")),
-				"Name", x, y, w, h);
+				"Name"+System.nanoTime(), x, y, w, h);
 		this.parent = parent;
 		this.h = h;
 		this.w = w;
