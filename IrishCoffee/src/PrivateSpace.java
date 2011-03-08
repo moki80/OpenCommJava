@@ -53,7 +53,7 @@ public class PrivateSpace extends Tab1 {
 	public void createPeeps() {
 		for (int i = 0; i < people.size(); i++) {
 			peeps.add(new Peep(parent, people.get(i).getImage(), people.get(i)
-					.getName(), x + w / 3, (y + tabh )+ (h - tabh) / (people.size() + 1)
+					.getName(), x + w / 8, (y + tabh )+ (h - tabh) / (people.size() + 1)
 					* (i + 1)));
 		}
 	}

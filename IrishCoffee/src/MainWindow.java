@@ -55,7 +55,7 @@ public class MainWindow extends PApplet {
 		
 		pspaces[0]= new PrivateSpace(this, people1, 0, controlP5);
 		pspaces[1]= new PrivateSpace(this, people2, setupw/4, controlP5);
-		/*Tab1*/ chat= new Chat(this, setupw/2, controlP5); 
+//		/*Tab1*/ chat= new Chat(this, setupw/2, controlP5); 
 		
 		
 //		Han-Wei: Feb 26: Correct this

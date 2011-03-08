@@ -48,7 +48,7 @@ public class Space extends Controller {
 				// draw lasso if selecting people for private space
 				if (parent.mousePressed) {
 					selectionLine.stroke(255);
-					selectionLine.strokeWeight(6);
+					selectionLine.strokeWeight(4);
 					selectionLine.beginDraw();
 					selectionLine.line(parent.mouseX, parent.mouseY, parent.pmouseX, parent.pmouseY);
 					selectionLine.endDraw();

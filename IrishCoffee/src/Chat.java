@@ -38,7 +38,7 @@ public class Chat extends Tab1 {
 	public void dothis() {
 		// Han-Wei: Feb 26: Correct this
 		controlP5 = new ControlP5(parent); // did not create a new one
-		myTextarea = controlP5.addTextarea("chat here", "I'm here!", x, y + tabh, w, h - h / 5);
+		myTextarea = controlP5.addTextarea("chat here", "I'm here!", x, y + tabh, w - 6, h - h / 5);
 		myTextarea.setColorForeground(0xffff0000);
 		
 		myTextfield = controlP5.addTextfield("Type here", x, ((MainWindow) parent).setuph - h / 5 - 15, w, h / 5);
